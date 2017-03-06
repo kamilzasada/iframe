@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iframe</title>
+
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="iframe">
+
+    <h1>Lorem ipsum dolor.</h1>
+
+    <strong id="text">&lt;text&gt;</strong>
+
+    <pre id="data">&lt;data&gt;</pre>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur corporis deleniti dolores et, illum maiores natus nesciunt odit officiis perferendis praesentium, quod repellendus soluta sunt, suscipit veritatis voluptatum. Autem, eum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus distinctio mollitia quaerat quidem quos sit? Doloribus enim error incidunt inventore magni neque perspiciatis similique voluptatem? Et perspiciatis quasi sequi.</p>
+
+    <button type="button" id="btnContent">load more content</button>
+
+    <div id="content" class="hidden">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur corporis deleniti dolores et, illum maiores natus nesciunt odit officiis perferendis praesentium, quod repellendus soluta sunt, suscipit veritatis voluptatum. Autem, eum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus distinctio mollitia quaerat quidem quos sit? Doloribus enim error incidunt inventore magni neque perspiciatis similique voluptatem? Et perspiciatis quasi sequi.</p>
+    </div>
+
+    <script>
+        console.log('iframe');
+
+        var index = window.parent;
+        var elData = document.getElementById('data');
+        var elButton = document.getElementById('btnContent');
+        var elContent = document.getElementById('content');
+
+        window.addEventListener('message', function(event) {
+            var dataToSend = {};
+
+            elData.textContent = JSON.stringify(event.data);
+
+            dataToSend.firstName = event.data.firstName.toUpperCase();
+            dataToSend.lastName = event.data.lastName.toUpperCase();
+
+            setTimeout(function() {
+                index.postMessage(dataToSend, 'http://localhost:8080');
+            }, 500);
+        }, false);
+
+        elButton.addEventListener('click', function() {
+            elContent.classList = [];
+        });
+    </script>
+
+</body>
+</html>

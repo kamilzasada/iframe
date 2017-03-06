@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="index">
+
+    <h1>Lorem ipsum dolor.</h1>
+
+    <strong id="text">&lt;text&gt;</strong>
+
+    <pre id="data">&lt;data&gt;</pre>
+
+    <iframe id="iframe"
+            src="http://localhost:8080/iframe.html"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allowfullscreen></iframe>
+
+    <script>
+        console.log('index');
+
+        var iframe = document.getElementById('iframe');
+        var iframeWindow = iframe.contentWindow;
+
+        var elData = document.getElementById('data');
+
+        iframeWindow.addEventListener('DOMContentLoaded', function() {
+            modifyDOM();
+            sendMessage();
+            catchMessage();
+        });
+
+        function modifyDOM() {
+            var iframeDocument = iframe.contentDocument;
+            var iframeText = iframeDocument.getElementById('text');
+
+            setTimeout(function() {
+                iframeText.textContent = '321';
+            }, 1000);
+        }
+
+        function sendMessage() {
+            setTimeout(function() {
+                var user = { firstName: 'John', lastName: 'Doe' };
+
+                iframeWindow.postMessage(user, 'http://localhost:8080');
+            }, 1500);
+        }
+
+        function catchMessage() {
+            window.addEventListener('message', function(event) {
+                elData.textContent = JSON.stringify(event.data);
+            }, false);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+body {
+    padding: 1em;
+    margin: 0;
+    font-family: monospace;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+iframe {
+    margin: 2em 0;
+}
+
+strong {
+    color: #c0392b;
+}
+
+.index {
+    background: #ecf0f1;
+}
+
+.iframe {
+    background: #bdc3c7;
+}
+
+.hidden {
+    display: none;
+}
