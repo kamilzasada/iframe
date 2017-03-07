@@ -32,22 +32,41 @@
         var elButton = document.getElementById('btnContent');
         var elContent = document.getElementById('content');
 
+        var documentHeight;
+        var message;
+
         window.addEventListener('message', function(event) {
-            var dataToSend = {};
+            var message = {
+                messageType: 'DATA',
+                messageData: {}
+            };
+
+            message.messageData.firstName = event.data.firstName.toUpperCase();
+            message.messageData.lastName = event.data.lastName.toUpperCase();
 
             elData.textContent = JSON.stringify(event.data);
 
-            dataToSend.firstName = event.data.firstName.toUpperCase();
-            dataToSend.lastName = event.data.lastName.toUpperCase();
-
             setTimeout(function() {
-                index.postMessage(dataToSend, 'http://localhost:8080');
+                index.postMessage(JSON.stringify(message), 'http://localhost:8080');
             }, 500);
         }, false);
 
         elButton.addEventListener('click', function() {
             elContent.classList = [];
         });
+
+        setInterval(function() {
+            if (documentHeight !== document.body.offsetHeight) {
+                documentHeight = document.body.offsetHeight;
+
+                message = {
+                    messageType: 'RESIZE',
+                    messageData: documentHeight
+                };
+
+                index.postMessage(JSON.stringify(message), 'http://localhost:8080');
+            }
+        }, 10);
     </script>
 
 </body>
